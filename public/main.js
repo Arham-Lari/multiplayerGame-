@@ -1,5 +1,4 @@
 const canvas = document.querySelector("canvas");
-const pixelRatio = devicePixelRatio || 1;
 const ctx = canvas.getContext("2d");
 
 canvas.height = innerHeight;
@@ -23,7 +22,28 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
                 },
                 radius: bacckenedPlayer[id].radius,
                 color: bacckenedPlayer[id].color,
+                squence :bacckenedPlayer[id].squence,
             })
+        }
+        else{
+            if(id == socket.id){
+                FrontenedPlayer[id].x = bacckenedPlayer[id].x;
+                FrontenedPlayer[id].y = bacckenedPlayer[id].y;
+
+                const backenedLastIndex = playerInputs.findIndex((input)=>{
+                    return input.squence == bacckenedPlayer[id].squence;
+                })
+
+                playerInputs.splice(0,backenedLastIndex);
+
+                playerInputs.forEach(input => {
+                   FrontenedPlayer[id].x += input.dx;
+                   FrontenedPlayer[id].y += input.dy;
+                });
+            }else{
+                FrontenedPlayer[id].x = bacckenedPlayer[id].x;
+                FrontenedPlayer[id].y = bacckenedPlayer[id].y;
+            }
         }
 
         for(id in FrontenedPlayer){
