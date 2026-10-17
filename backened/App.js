@@ -28,6 +28,9 @@ io.on("connect",(socket)=>{
     io.emit('updatePlayer',(bPlayer));
 
 
+    io.on("disconnect",()=>{
+        delete bPlayer[socket.id];
+    })
 })
 
 server.listen(PORT,()=>{

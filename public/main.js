@@ -9,8 +9,12 @@ const socket = io();
 const FrontenedPlayer ={};
 
 socket.on("updatePlayer",(bacckenedPlayer)=>{
+
     for(id in bacckenedPlayer){
+
         if(!FrontenedPlayer[id]){
+
+            //adding the new player to forntened player list
             FrontenedPlayer[id] = new Player({
                 position:{
                     x:bacckenedPlayer[id].x,
@@ -19,6 +23,12 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
                 radius: bacckenedPlayer[id].radius,
                 color: bacckenedPlayer[id].color,
             })
+        }
+
+        for(id in FrontenedPlayer){
+            if(!bacckenedPlayer[id]){
+                delete FrontenedPlayer[id];
+            }
         }
     }
 })
