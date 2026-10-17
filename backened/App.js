@@ -1,4 +1,3 @@
-import { constants } from "buffer";
 import express from "express"
 import http from "http"
 import { Server } from "socket.io"
@@ -21,15 +20,14 @@ io.on("connect",(socket)=>{
     bPlayer[socket.id] = {
         x: Math.random() * 600,
         y: Math.random() * 500,
-        radius : 40,
-        color : "orange",
+        radius : 20,
+        color : `hsl(${Math.random() * 360},100%,50%)`,
         squence : 0,
     }
 
 
     socket.on('move',({keycode,squence})=>{
         const SPEED = 10;
-
         switch(keycode){
             case "keyS":{
                 bPlayer[socket.id].y += SPEED;
