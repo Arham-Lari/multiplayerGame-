@@ -19,8 +19,8 @@ app.get('/',(_,res)=>{
 
 io.on("connect",(socket)=>{
     bPlayer[socket.id] = {
-        x: 100,
-        y: 100,
+        x: Math.random() * 600,
+        y: Math.random() * 500,
         radius : 40,
         color : "orange"
     }
@@ -28,7 +28,7 @@ io.on("connect",(socket)=>{
     io.emit('updatePlayer',(bPlayer));
 
 
-    io.on("disconnect",()=>{
+    socket.on('disconnect',()=>{
         delete bPlayer[socket.id];
     })
 })
