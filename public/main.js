@@ -1,8 +1,9 @@
 const canvas = document.querySelector("canvas");
+const pixelRatio = devicePixelRatio || 1;
+const ctx = canvas.getContext("2d");
+
 canvas.height = innerHeight;
 canvas.width = innerWidth;
-
-const ctx = canvas.getContext("2d");
 
 const socket = io();
 
