@@ -22,16 +22,51 @@ io.on("connect",(socket)=>{
         x: Math.random() * 600,
         y: Math.random() * 500,
         radius : 40,
-        color : "orange"
+        color : "orange",
+        squence : 0,
     }
 
-    io.emit('updatePlayer',(bPlayer));
 
+    socket.on('move',({keycode,squence})=>{
+        const SPEED = 10;
+
+        switch(keycode){
+            case "keyS":{
+                bPlayer[socket.id].y += SPEED;
+                bPlayer[socket.id].squence = squence;
+                break;
+            }
+            
+            case "keyW":{
+                bPlayer[socket.id].y -= SPEED;
+                bPlayer[socket.id].squence = squence;
+                break;
+            }
+
+
+            case "keyA":{
+                bPlayer[socket.id].x -= SPEED;
+                bPlayer[socket.id].squence = squence;
+                break;
+            }
+
+            case "keyD":{
+                bPlayer[socket.id].x += SPEED;
+                bPlayer[socket.id].squence = squence;
+                break;
+            }
+        }
+
+    })
 
     socket.on('disconnect',()=>{
         delete bPlayer[socket.id];
     })
 })
+
+setInterval(()=>{
+    io.emit('updatePlayer',(bPlayer));
+},15);
 
 server.listen(PORT,()=>{
   console.log("the server is listing on Port : ",PORT);
