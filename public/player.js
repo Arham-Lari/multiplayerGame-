@@ -4,10 +4,10 @@ class Player{
             x:0,
             y:0,
         },
-        radius,
-        colour,
+        radius= 30,
+        color= "green",
     }){
-        this.colour = colour;
+        this.color = color;
         this.posX = position.x;
         this.posY = position.y;
         this.radius = radius;

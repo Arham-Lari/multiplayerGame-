@@ -1,4 +1,4 @@
-import { Socket } from "dgram";
+import { constants } from "buffer";
 import express from "express"
 import http from "http"
 import { Server } from "socket.io"
@@ -9,14 +9,25 @@ const io =new Server(server,{pingInterval: 2000 , pingTimeout: 5000});
 
 const PORT = 8000;
 
+const bPlayer = {};
+
 app.use(express.static('../public'));
 
 app.get('/',(_,res)=>{
     res.sendFile(__dirname+"/index.html");
 })
 
-io.on("connect",(Socket)=>{
-    console.log("some body is connected ",Socket.id);
+io.on("connect",(socket)=>{
+    bPlayer[socket.id] = {
+        x: 100,
+        y: 100,
+        radius : 40,
+        color : "orange"
+    }
+
+    io.emit('updatePlayer',(bPlayer));
+
+
 })
 
 server.listen(PORT,()=>{
