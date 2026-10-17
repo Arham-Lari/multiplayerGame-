@@ -1,0 +1,19 @@
+{
+  "name": "backened",
+  "version": "1.0.0",
+  "description": "it is the backened for online shooting game",
+  "type": "module",
+  "main": "App.js",
+  "scripts": {
+    "dev": "node App.js"
+  },
+  "keywords": [
+    "expressjs",
+    "socketio"
+  ],
+  "author": "Arham Lari",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
+}
