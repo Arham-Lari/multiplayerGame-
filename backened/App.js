@@ -91,9 +91,11 @@ setInterval(()=>{
         bProjectile[id].px += bProjectile[id].velocity.x;
         bProjectile[id].py += bProjectile[id].velocity.y;
 
-        console.log(bProjectile)
 
-        if(bProjectile[id].px - 5 <=0 || bProjectile[id].px + 5 >= bPlayer[bProjectile[id].player].w ){
+        if(bProjectile[id].px - 5 <=0 || bProjectile[id].px + 5 >= bPlayer[bProjectile[id].player].w ||
+         bProjectile[id].py -5 <= 0 || bProjectile[id].py + 5 >= bPlayer[bProjectile
+            [id].player].hj) {
+            
             delete bProjectile[id];
         }
     }
