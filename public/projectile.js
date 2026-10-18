@@ -1,22 +1,21 @@
 class Projectile{
-    constructor(px,py,vx,vy,radius,color){
+    constructor({px,py,velocity = 0,radius,color}){
         this.px = px;
         this.py = py;
-        this.vx = vx;
-        this.vy = vy;
+        this.velocity = velocity;
         this.radius = radius;
         this.color = color;
     }
     draw(){
         ctx.beginPath();
-        ctx.arc(this.px,this.py,this.radius,0,Math.PI,false);
+        ctx.arc(this.px,this.py,this.radius,0,Math.PI *2,false);
         ctx.fillStyle = this.color;
         ctx.fill();
     }
 
     update(){
         this.draw();
-        this.px += this.vx;
-        this.py += this.vy;
+        this.px += this.velocity.x;
+        this.py += this.velocity.y;
     }
 }

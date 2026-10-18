@@ -9,6 +9,8 @@ const io =new Server(server,{pingInterval: 2000 , pingTimeout: 5000});
 const PORT = 8000;
 
 const bPlayer = {};
+const bProjectile = {};
+let projectileId = 0;
 
 app.use(express.static('../public'));
 
@@ -24,6 +26,10 @@ io.on("connect",(socket)=>{
         color : `hsl(${Math.random() * 360},100%,50%)`,
         squence : 0,
     }
+
+    socket.on("init",({w,h})=>{
+      bPlayer[socket.id] = {...bPlayer[socket.id],w,h};
+    })
 
 
     socket.on('move',({keycode,squence})=>{
@@ -57,12 +63,42 @@ io.on("connect",(socket)=>{
 
     })
 
+    socket.on("fire",({x,y,angle}) =>{
+        projectileId ++;
+
+        const velocity = {
+            x : Math.cos(angle)*5,
+            y : Math.sin(angle)*5,
+        }
+
+        bProjectile[projectileId] = {
+            px:x,
+            py:y,
+            velocity,
+            color : bPlayer[socket.id].color,
+            player : socket.id,
+        }
+    })
+
     socket.on('disconnect',()=>{
         delete bPlayer[socket.id];
     })
 })
 
 setInterval(()=>{
+
+    for(const id in bProjectile){
+        bProjectile[id].px += bProjectile[id].velocity.x;
+        bProjectile[id].py += bProjectile[id].velocity.y;
+
+        console.log(bProjectile)
+
+        if(bProjectile[id].px - 5 <=0 || bProjectile[id].px + 5 >= bPlayer[bProjectile[id].player].w ){
+            delete bProjectile[id];
+        }
+    }
+    io.emit('updateProjectile',(bProjectile)); 
+
     io.emit('updatePlayer',(bPlayer));
 },15);
 

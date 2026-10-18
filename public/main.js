@@ -8,6 +8,10 @@ const socket = io();
 
 const FrontenedPlayer ={};
 
+socket.on("connect",()=>{
+    socket.emit("init",{w:canvas.width,h:canvas.height})
+})
+
 socket.on("updatePlayer",(bacckenedPlayer)=>{
 
     for(id in bacckenedPlayer){
@@ -37,10 +41,10 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
                 if(backenedLastIndex != -1) {
                     playerInputs.splice(0,backenedLastIndex+1);
                 }
-
                 playerInputs.forEach(input => {
                     FrontenedPlayer[id].x += input.dx;
                     FrontenedPlayer[id].y += input.dy;
+
                 });
             }else{
                 gsap.to(FrontenedPlayer[id],{
@@ -61,6 +65,34 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
 })
 
 
+socket.on('updateProjectile',(backenedPro) =>{
+    for(const id in backenedPro){
+        if(!forntenedProjectile[id]){
+
+            forntenedProjectile[id] = new Projectile({
+                px : backenedPro[id].px,
+                py : backenedPro[id].py,
+                radius : 5,
+                color : backenedPro[id].color,
+            })
+            
+        }
+
+        else{
+            
+            forntenedProjectile[id].px += backenedPro[id].velocity.x;
+            forntenedProjectile[id].py += backenedPro[id].velocity.y;
+        }
+    }
+    
+    for(const id in forntenedProjectile){
+        if(!backenedPro[id]){
+            delete forntenedProjectile
+            [id];
+        }
+    }
+})
+
 
 function anime(){
 
@@ -70,11 +102,14 @@ function anime(){
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
 
-    
+
     for(id in FrontenedPlayer){
         FrontenedPlayer[id].draw();
     }
 
+    for(const id in forntenedProjectile){
+        forntenedProjectile[id].draw();
+    }
 }
 
 anime();

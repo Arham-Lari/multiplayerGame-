@@ -2,8 +2,12 @@ const forntenedProjectile = {};
 
 window.addEventListener("click",(e)=>{
     
-    const angle = Math.atan2(e.clientY - FrontenedPlayer[socket.id].posY, e.clientX - FrontenedPlayer[socket.id].posX);
+    const x = FrontenedPlayer[socket.id].posX;
+    const y = FrontenedPlayer[socket.id].posY;
 
-    socket.emit("fire",{angle,socket: socket.id})
+    const angle = Math.atan2(e.clientY - y, e.clientX - x);
+
+    socket.emit("fire",{x,y,angle})
     
 })
+
