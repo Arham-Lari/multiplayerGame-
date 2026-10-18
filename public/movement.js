@@ -1,4 +1,5 @@
-const playerInputs = {};
+const playerInputs = [];
+let squenceNumber = 0;
 
 const keyPressed ={
     w : {
@@ -15,21 +16,23 @@ const keyPressed ={
     }
 }
 
-addEventListener("keydown",(e)=>{
+window.addEventListener("keydown",(e)=>{
     switch(e.code){
-        case 'keyS':{
+
+        case 'KeyS':{
             keyPressed.s.isPressed = true;
+            console.log('key is presse')
             break;
         }
-        case 'keyD':{
+        case 'KeyD':{
             keyPressed.d.isPressed = true;
             break;
         }
-        case 'keyW':{
+        case 'KeyW':{
             keyPressed.w.isPressed = true;
             break;
         }
-        case 'keyA':{
+        case 'KeyA':{
             keyPressed.a.isPressed = true;
             break;
         }
@@ -39,19 +42,19 @@ addEventListener("keydown",(e)=>{
 
 addEventListener("keyup",(e)=>{
     switch(e.code){
-        case 'keyS':{
+        case 'KeyS':{
             keyPressed.s.isPressed = false;
             break;
         }
-        case 'keyD':{
+        case 'KeyD':{
             keyPressed.d.isPressed = false;
             break;
         }
-        case 'keyW':{
+        case 'KeyW':{
             keyPressed.w.isPressed = false;
             break;
         }
-        case 'keyA':{
+        case 'KeyA':{
             keyPressed.a.isPressed = false;
             break;
         }
@@ -61,11 +64,10 @@ addEventListener("keyup",(e)=>{
 setInterval(()=>{
 
     const SPEED = 10;
-    let squenceNumber = 0;
 
     if(keyPressed.a.isPressed){
         squenceNumber++;
-        FrontenedPlayer[socket.id].posY += SPEED;
+        FrontenedPlayer[socket.id].posX -= SPEED;
         playerInputs.push({squenceNumber, dx: -SPEED , dy: 0});
         socket.emit("move",{keycode:"keyA",squenceNumber});
     }
@@ -74,12 +76,12 @@ setInterval(()=>{
         squenceNumber++;
         FrontenedPlayer[socket.id].posX += SPEED;
         playerInputs.push({squenceNumber, dx: SPEED , dy: 0});
-        socket.emit("move",{keycode:"KeyD",squenceNumber});
+        socket.emit("move",{keycode:"keyD",squenceNumber});
     }
 
     if(keyPressed.s.isPressed){
         squenceNumber++;
-        FrontenedPlayer[socket.id].posY -= SPEED;
+        FrontenedPlayer[socket.id].posY += SPEED;
         playerInputs.push({squenceNumber, dx:0, dy: -SPEED});
         socket.emit("move",{keycode:"keyS" , squenceNumber});
     }
