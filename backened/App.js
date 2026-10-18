@@ -20,10 +20,10 @@ app.get('/',(_,res)=>{
 
 io.on("connect",(socket)=>{
     bPlayer[socket.id] = {
-        x: Math.random() * 600,
-        y: Math.random() * 500,
+        x: Math.random() * 1250,
+        y: Math.random() * 600,
         radius : 20,
-        color : `hsl(${Math.random() * 360},100%,50%)`,
+        color : `hsl(${Math.random() * 360 },100%,50%)`,
         squence : 0,
     }
 
@@ -78,6 +78,7 @@ io.on("connect",(socket)=>{
             color : bPlayer[socket.id].color,
             player : socket.id,
         }
+
     })
 
     socket.on('disconnect',()=>{
@@ -87,23 +88,36 @@ io.on("connect",(socket)=>{
 
 setInterval(()=>{
 
-    for(const id in bProjectile){
-        bProjectile[id].px += bProjectile[id].velocity.x;
-        bProjectile[id].py += bProjectile[id].velocity.y;
+    const radius  = 5;
+    for(const pid in bProjectile){
+        bProjectile[pid].px += bProjectile[pid].velocity.x;
+        bProjectile[pid].py += bProjectile[pid].velocity.y;
 
 
-        if(bProjectile[id].px - 5 <=0 || bProjectile[id].px + 5 >= bPlayer[bProjectile[id].player].w ||
-         bProjectile[id].py -5 <= 0 || bProjectile[id].py + 5 >= bPlayer[bProjectile
-            [id].player].hj) {
-            
-            delete bProjectile[id];
+        if(bProjectile[pid].px - radius <=0 || bProjectile[pid].px + radius >= bPlayer[bProjectile[pid].player]?.w ||bProjectile[pid].py -radius <= 0 || bProjectile[pid].py + radius >= bPlayer[bProjectile[pid].player]?.h) {
+
+            delete bProjectile[pid];
+            continue;
+        }
+
+        for(const id in bPlayer){
+
+            const distance = Math.hypot((bProjectile[pid].px - bPlayer[id].x),(bProjectile[pid].py - bPlayer[id].y));
+
+            if(distance <= radius+bPlayer[id].radius && bProjectile[pid].player != id){
+                delete bPlayer[id];
+                delete bProjectile[pid];
+                break;
+            }
+
         }
     }
     io.emit('updateProjectile',(bProjectile)); 
 
     io.emit('updatePlayer',(bPlayer));
+    
 },15);
 
 server.listen(PORT,()=>{
-  console.log("the server is listing on Port : ",PORT);
+    console.log("the server is listing on Port : ",PORT);
 })
