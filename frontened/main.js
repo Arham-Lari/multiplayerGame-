@@ -32,7 +32,7 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
                 squence :bacckenedPlayer[id].squence,
             })
 
-            playerLabel.innerHTML += `<div id="${id}">${id}:0</div>`
+            playerLabel.innerHTML += `<div id="${id}">${id}:</div>`
         }
         else{
             if(id == socket.id){

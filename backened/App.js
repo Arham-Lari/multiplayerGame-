@@ -25,6 +25,7 @@ io.on("connect",(socket)=>{
         radius : 20,
         color : `hsl(${Math.random() * 360 },100%,50%)`,
         squence : 0,
+        score : 0,
     }
 
     socket.on("init",({w,h})=>{
@@ -107,8 +108,11 @@ setInterval(()=>{
             const distance = Math.hypot((bProjectile[pid].px - bPlayer[id].x),(bProjectile[pid].py - bPlayer[id].y));
 
             if(distance <= radius+bPlayer[id].radius && bProjectile[pid].player != id){
+                bPlayer[bProjectile[pid].player].score++;
+
                 delete bPlayer[id];
                 delete bProjectile[pid];
+
                 break;
             }
 
