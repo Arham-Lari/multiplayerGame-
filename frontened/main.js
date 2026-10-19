@@ -1,6 +1,9 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
+//selecting the div class which holds the player label
+const playerLabel = document.querySelector("#player-label");
+
 canvas.height = innerHeight;
 canvas.width = innerWidth;
 
@@ -28,6 +31,8 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
                 color: bacckenedPlayer[id].color,
                 squence :bacckenedPlayer[id].squence,
             })
+
+            playerLabel.innerHTML += `<div id="${id}">${id}:0</div>`
         }
         else{
             if(id == socket.id){
@@ -58,6 +63,12 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
 
         for(id in FrontenedPlayer){
             if(!bacckenedPlayer[id]){
+                
+                //selcting the div i have to remove
+                const removediv = document.querySelector(`div[id="${id}"]`);
+                removediv.parentElement.removeChild(removediv);
+
+                //removing the player
                 delete FrontenedPlayer[id];
             }
         }
