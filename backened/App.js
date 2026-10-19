@@ -12,7 +12,7 @@ const bPlayer = {};
 const bProjectile = {};
 let projectileId = 0;
 
-app.use(express.static('../public'));
+app.use(express.static('../frontened'));
 
 app.get('/',(_,res)=>{
     res.sendFile(__dirname+"/index.html");
@@ -34,6 +34,8 @@ io.on("connect",(socket)=>{
 
     socket.on('move',({keycode,squence})=>{
         const SPEED = 10;
+
+
         switch(keycode){
             case "keyS":{
                 bPlayer[socket.id].y += SPEED;
