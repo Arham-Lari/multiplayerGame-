@@ -32,9 +32,38 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
                 squence :bacckenedPlayer[id].squence,
             })
 
-            playerLabel.innerHTML += `<div id="${id}">${id}:</div>`
+            playerLabel.innerHTML += `<div id = "${id}" data-score = "${bacckenedPlayer[id].score}"> ${id} : ${bacckenedPlayer[id].score} </div>`
+
         }
         else{
+
+            document.querySelector(`div[id = ${id}]`).innerHTML = `${id}: ${bacckenedPlayer[id].score}`
+
+                document
+                .querySelector(`div[id="${id}"]`)
+                .setAttribute('data-score',bacckenedPlayer[id].score);               
+
+            //sort the players divs
+            const parentDiv = document.querySelector('#player-label');
+            const childDivs = Array.from(parentDiv.querySelectorAll('div'));
+
+            childDivs.sort((a,b)=>{
+                const scoreA = Number(a.getAttribute('data-score'));
+                const scoreB = Number(b.getAttribute('data-score'));
+
+                return scoreB - scoreA;
+            })
+
+            //remove old elements 
+             childDivs.forEach((div)=>{
+                parentDiv.removeChild(div);
+            })
+
+            //adds sorted elements
+            childDivs.forEach((div)=>{
+                parentDiv.appendChild(div)
+            })
+
             if(id == socket.id){
                 FrontenedPlayer[id].x = bacckenedPlayer[id].x;
                 FrontenedPlayer[id].y = bacckenedPlayer[id].y;
@@ -55,7 +84,7 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
                 gsap.to(FrontenedPlayer[id],{
                     posX: bacckenedPlayer[id].x,
                     posY: bacckenedPlayer[id].y,
-                    duration:0.015,
+                    duration: 0.015,
                     ease: "linear",
                 })
             }
@@ -65,7 +94,7 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
             if(!bacckenedPlayer[id]){
                 
                 //selcting the div i have to remove
-                const removediv = document.querySelector(`div[id="${id}"]`);
+                const removediv = document.querySelector(`div[id= "${id}"]`);
                 removediv.parentElement.removeChild(removediv);
 
                 //removing the player
@@ -91,15 +120,14 @@ socket.on('updateProjectile',(backenedPro) =>{
 
         else{
             
-            forntenedProjectile[id].px += backenedPro[id].velocity.x;
-            forntenedProjectile[id].py += backenedPro[id].velocity.y;
+                 forntenedProjectile[id].px += backenedPro[id].velocity.x;
+                 forntenedProjectile[id].py += backenedPro[id].velocity.y;
         }
     }
     
     for(const id in forntenedProjectile){
         if(!backenedPro[id]){
-            delete forntenedProjectile
-            [id];
+            delete forntenedProjectile[id];
         }
     }
 })

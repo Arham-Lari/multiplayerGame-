@@ -124,6 +124,6 @@ setInterval(()=>{
     
 },15);
 
-server.listen(PORT,"0.0.0.0",()=>{
+server.listen(PORT,()=>{
     console.log("the server is listing on Port : ",PORT);
 })
