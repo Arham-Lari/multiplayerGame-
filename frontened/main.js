@@ -11,9 +11,6 @@ const socket = io();
 
 const FrontenedPlayer ={};
 
-socket.on("connect",()=>{
-    socket.emit("init",{w:canvas.width,h:canvas.height})
-})
 
 socket.on("updatePlayer",(bacckenedPlayer)=>{
 
@@ -30,14 +27,15 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
                 radius: bacckenedPlayer[id].radius,
                 color: bacckenedPlayer[id].color,
                 squence :bacckenedPlayer[id].squence,
+                name : bacckenedPlayer[id].name,
             })
 
-            playerLabel.innerHTML += `<div id = "${id}" data-score = "${bacckenedPlayer[id].score}"> ${id} : ${bacckenedPlayer[id].score} </div>`
+            playerLabel.innerHTML += `<div id = "${id}" data-score = "${bacckenedPlayer[id].score}"> ${bacckenedPlayer[id].name} : ${bacckenedPlayer[id].score} </div>`
 
         }
         else{
 
-            document.querySelector(`div[id = ${id}]`).innerHTML = `${id}: ${bacckenedPlayer[id].score}`
+            document.querySelector(`div [id = "${id}"]`).innerHTML = `${bacckenedPlayer[id].name}: ${bacckenedPlayer[id].score}`
 
                 document
                 .querySelector(`div[id="${id}"]`)
@@ -99,6 +97,10 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
 
                 //removing the player
                 delete FrontenedPlayer[id];
+
+                if( id == socket.id){
+                document.querySelector("#userForm").style.display = "block";
+                }
             }
         }
     }

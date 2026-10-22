@@ -19,17 +19,19 @@ app.get('/',(_,res)=>{
 })
 
 io.on("connect",(socket)=>{
-    bPlayer[socket.id] = {
-        x: Math.random() * 1250,
-        y: Math.random() * 600,
-        radius : 20,
-        color : `hsl(${Math.random() * 360 },100%,50%)`,
-        squence : 0,
-        score : 0,
-    }
 
-    socket.on("init",({w,h})=>{
-      bPlayer[socket.id] = {...bPlayer[socket.id],w,h};
+    socket.on("userInit",({name,w,h})=>{
+        bPlayer[socket.id] = {
+            x: Math.random() * 1250,
+            y: Math.random() * 600,
+            radius : 20,
+            color : `hsl(${Math.random() * 360 },100%,50%)`,
+            squence : 0,
+            score : 0,
+            w,
+            h,
+            name
+        };
     })
 
 
