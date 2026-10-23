@@ -9,6 +9,8 @@ canvas.width = innerWidth;
 
 const socket = io();
 
+const forntenedProjectile = {};
+
 const FrontenedPlayer ={};
 
 
@@ -63,8 +65,8 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
             })
 
             if(id == socket.id){
-                FrontenedPlayer[id].x = bacckenedPlayer[id].x;
-                FrontenedPlayer[id].y = bacckenedPlayer[id].y;
+                FrontenedPlayer[id].posX = bacckenedPlayer[id].x;
+                FrontenedPlayer[id].posY = bacckenedPlayer[id].y;
 
                 const backenedLastIndex = playerInputs.findIndex((input)=>{
                     return input.squence == bacckenedPlayer[id].squence;
@@ -86,6 +88,7 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
                     ease: "linear",
                 })
             }
+            console.log(FrontenedPlayer[socket.id].posX)
         }
 
         for(id in FrontenedPlayer){

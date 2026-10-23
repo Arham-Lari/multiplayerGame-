@@ -1,7 +1,8 @@
-const forntenedProjectile = {};
 
 window.addEventListener("click",(e)=>{
     
+    if(!FrontenedPlayer[socket.id]) return;
+
     const x = FrontenedPlayer[socket.id].posX;
     const y = FrontenedPlayer[socket.id].posY;
 
@@ -10,4 +11,3 @@ window.addEventListener("click",(e)=>{
     socket.emit("fire",{x,y,angle})
     
 })
-

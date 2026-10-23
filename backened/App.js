@@ -22,7 +22,7 @@ io.on("connect",(socket)=>{
 
     socket.on("userInit",({name,w,h})=>{
         bPlayer[socket.id] = {
-            x: Math.random() * 1250,
+            x: Math.random() * 1200,
             y: Math.random() * 600,
             radius : 20,
             color : `hsl(${Math.random() * 360 },100%,50%)`,
@@ -72,19 +72,20 @@ io.on("connect",(socket)=>{
             down : bPlayer[socket.id].y + bPlayer[socket.id].radius,
         }
 
+        console.log(bPlayer[socket.id])
 
-        if(playerSide.left < 0 ){
+        if(playerSide.left <= 0 ){
             bPlayer[socket.id].x = bPlayer[socket.id].radius;
         }
 
-        if(playerSide.right > bPlayer[socket.id].w){
-           bPlayer[socket.id].x = bPlayer[socket.id].w - bPlayer[socket.id].radius;
+        if(playerSide.right >= bPlayer[socket.id].w){
+            bPlayer[socket.id].x = bPlayer[socket.id].w - bPlayer[socket.id].radius;
         }
          
-        if(playerSide.up < 0){
+        if(playerSide.up <= 0){
            bPlayer[socket.id].y = bPlayer[socket.id].radius;
         }
-        if(playerSide.down > bPlayer[socket.id].h ){
+        if(playerSide.down >= bPlayer[socket.id].h ){
             bPlayer[socket.id].y = bPlayer[socket.id].h - bPlayer[socket.id].radius;
         }
     })
