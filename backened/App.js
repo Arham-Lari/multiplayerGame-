@@ -38,7 +38,6 @@ io.on("connect",(socket)=>{
     socket.on('move',({keycode,squence})=>{
         const SPEED = 10;
 
-
         switch(keycode){
             case "keyS":{
                 bPlayer[socket.id].y += SPEED;
@@ -66,6 +65,28 @@ io.on("connect",(socket)=>{
             }
         }
 
+        const playerSide = {
+            left : bPlayer[socket.id].x - bPlayer[socket.id].radius,
+            right : bPlayer[socket.id].x + bPlayer[socket.id].radius,
+            up : bPlayer[socket.id].y - bPlayer[socket.id].radius,
+            down : bPlayer[socket.id].y + bPlayer[socket.id].radius,
+        }
+
+
+        if(playerSide.left < 0 ){
+            bPlayer[socket.id].x = bPlayer[socket.id].radius;
+        }
+
+        if(playerSide.right > bPlayer[socket.id].w){
+           bPlayer[socket.id].x = bPlayer[socket.id].w - bPlayer[socket.id].radius;
+        }
+         
+        if(playerSide.up < 0){
+           bPlayer[socket.id].y = bPlayer[socket.id].radius;
+        }
+        if(playerSide.down > bPlayer[socket.id].h ){
+            bPlayer[socket.id].y = bPlayer[socket.id].h - bPlayer[socket.id].radius;
+        }
     })
 
     socket.on("fire",({x,y,angle}) =>{
