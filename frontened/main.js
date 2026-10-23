@@ -4,8 +4,8 @@ const ctx = canvas.getContext("2d");
 //selecting the div class which holds the player label
 const playerLabel = document.querySelector("#player-label");
 
-canvas.height = innerHeight;
-canvas.width = innerWidth;
+canvas.height = 600;
+canvas.width = 1250;
 
 const socket = io();
 

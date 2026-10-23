@@ -73,7 +73,6 @@ io.on("connect",(socket)=>{
             down : bPlayer[socket.id].y + bPlayer[socket.id].radius,
         }
 
-        console.log(bPlayer[socket.id])
 
         if(playerSide.left <= 0 ){
             bPlayer[socket.id].x = bPlayer[socket.id].radius;

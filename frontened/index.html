@@ -9,6 +9,12 @@
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
             margin: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: gray;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         input::placeholder {
@@ -23,6 +29,7 @@
         <title>Shooting-game</title>
     </head>
     <body >
+        <div>
         <div style="
             position: absolute;
             color:  white;
@@ -84,6 +91,7 @@
                     </button>
                 </div>
             </form>
+        </div>
         </div>
 
         <script src="https://cdn.socket.io/4.8.4/socket.io.min.js" integrity="sha384-fBrXvbDtHoeKWJ/hcA6M+YGueiDW+h45I7V6F2kD1S8bOkrF9rZYPLVkCR6BLR/1" crossorigin="anonymous"></script>
