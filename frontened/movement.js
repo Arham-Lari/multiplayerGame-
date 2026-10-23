@@ -21,7 +21,6 @@ window.addEventListener("keydown",(e)=>{
 
         case 'KeyS':{
             keyPressed.s.isPressed = true;
-            console.log('key is presse')
             break;
         }
         case 'KeyD':{
@@ -64,6 +63,8 @@ addEventListener("keyup",(e)=>{
 setInterval(()=>{
 
     const SPEED = 10;
+
+    if(!FrontenedPlayer[socket.id]) return;
 
     if(keyPressed.a.isPressed){
         squenceNumber++;

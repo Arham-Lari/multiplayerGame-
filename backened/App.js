@@ -21,6 +21,7 @@ app.get('/',(_,res)=>{
 io.on("connect",(socket)=>{
 
     socket.on("userInit",({name,w,h})=>{
+        
         bPlayer[socket.id] = {
             x: Math.random() * 1200,
             y: Math.random() * 600,

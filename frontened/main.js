@@ -76,8 +76,8 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
                     playerInputs.splice(0,backenedLastIndex+1);
                 }
                 playerInputs.forEach(input => {
-                    FrontenedPlayer[id].x += input.dx;
-                    FrontenedPlayer[id].y += input.dy;
+                    FrontenedPlayer[id].posX += input.dx;
+                    FrontenedPlayer[id].posY += input.dy;
 
                 });
             }else{
@@ -88,7 +88,6 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
                     ease: "linear",
                 })
             }
-            console.log(FrontenedPlayer[socket.id].posX)
         }
 
         for(id in FrontenedPlayer){
