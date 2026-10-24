@@ -76,9 +76,12 @@ socket.on("updatePlayer",(bacckenedPlayer)=>{
                     playerInputs.splice(0,backenedLastIndex+1);
                 }
                 playerInputs.forEach(input => {
-                    FrontenedPlayer[id].posX += input.dx;
-                    FrontenedPlayer[id].posY += input.dy;
-
+                    gsap.to(FrontenedPlayer[id],{
+                        posX : posX + input.dx,
+                        posY : posY + input.dy,
+                        duration : 0.015,
+                        ease : "linear"
+                    })
                 });
             }else{
                 gsap.to(FrontenedPlayer[id],{
